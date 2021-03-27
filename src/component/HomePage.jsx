@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { filterItems } from "../redux/shopAction";
+import parse from "html-react-parser";
 
 const HomePage = ({ foodItem, filterItems }) => {
   const [input, setInput] = useState([]);
@@ -53,6 +54,7 @@ const HomePage = ({ foodItem, filterItems }) => {
       </select>
       &nbsp;
       <button onClick={handleClick}>Filter</button>
+      <button onClick={() => setFilter([])}>Reset</button>
       <div className="row">
         {/* {console.log(foodItem.restData)} */}
         {foodItem.filterData.length === 0
@@ -60,7 +62,8 @@ const HomePage = ({ foodItem, filterItems }) => {
               <div key={res.id} className="col-md-3 p-4">
                 <img src="logo192.png" alt="img1" />
                 <p>{res.name}</p>
-                <p>{res.description}</p>
+                {}
+                <p>{parse(res.description)}</p>
               </div>
             ))
           : foodItem.filterData.map((res, ind) => (
@@ -70,6 +73,7 @@ const HomePage = ({ foodItem, filterItems }) => {
                 <p>{res.description}</p>
               </div>
             ))}
+        {/* Hello React */}
       </div>
     </div>
   );

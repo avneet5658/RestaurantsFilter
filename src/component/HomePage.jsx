@@ -17,6 +17,7 @@ const HomePage = ({ foodItem, filterItems }) => {
 
   const handleClick = () => {
     var tempD = [];
+    var tempData;
     input.map((res) => {
       foodItem.cuisineData.map(
         (res1) =>
@@ -24,9 +25,20 @@ const HomePage = ({ foodItem, filterItems }) => {
         // setFilter([...filter, ...res1.restaurants])
       );
     });
-    var tempSet = new Set(tempD);
-    console.log(...tempSet);
-    setFilter(tempSet);
+    tempData = tempD.map((resTempD) => {
+      return [resTempD.id, resTempD];
+    });
+    var mymap = new Map(tempData);
+    let result = [...mymap.values()];
+    console.log(result);
+    // let jsonObject = tempD.map(JSON.stringify);
+    // let tempSet = new Set(jsonObject);
+    // let tempArray = Array.from(tempSet).map(JSON.parse);
+    // console.log(tempArray);
+
+    // setFilter(tempD);
+    // setFilter(temArray);
+    setFilter(result);
   };
 
   return (
@@ -35,12 +47,9 @@ const HomePage = ({ foodItem, filterItems }) => {
         <h1>Restaurants</h1>
       </center>
       <select multiple={true} onChange={(e) => handleChange(e)}>
-        <option value="Chinese">Chinese</option>
-        <option value="Indian">Indian</option>
-        <option value="Thai">Thai</option>
-        <option value="Greek">Greek</option>
-        <option value="Vietnamese">Vietnamese</option>
-        <option value="French">French</option>
+        {foodItem.cuisineData.map((res, id) => (
+          <option value={res.name}>{res.name}</option>
+        ))}
       </select>
       &nbsp;
       <button onClick={handleClick}>Filter</button>
